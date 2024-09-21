@@ -47,11 +47,19 @@ function App() {
     }
   }
 
+  const toggleCompleted = (id: number) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      ),
+    )
+  }
+
   return (
     <div className="flex justify-center pt-10 min-h-screen bg-gradient-to-r from-blue-500 to-green-500">
       <div className="bg-white p-10 rounded-3xl shadow-2xl max-w-xl w-full">
         <h2 className="text-4xl font-bold mb-8 text-gray-800 text-center">
-          Todo with Typescript 
+          Todo with Typescript
         </h2>
         <form className="flex items-center gap-4 mb-8" onSubmit={handleSubmit}>
           <input
@@ -80,9 +88,21 @@ function App() {
               key={todo.id}
               className="flex justify-between items-center p-5 bg-gray-100 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
             >
-              <span className="text-xl font-medium text-gray-800">
-                {index + 1}. {todo.name}
-              </span>
+              <div className="flex items-center space-x-4">
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => toggleCompleted(todo.id)}
+                  className="form-checkbox h-5 w-5 text-green-500"
+                />
+                <span
+                  className={`text-xl font-medium ${
+                    todo.completed ? 'line-through text-gray-500' : 'text-gray-800'
+                  }`}
+                >
+                  {index + 1}. {todo.name}
+                </span>
+              </div>
               <div className="flex space-x-4">
                 <button
                   className="px-4 py-2 text-white font-medium bg-blue-500 rounded-lg shadow-md hover:bg-blue-400 transition-all"
